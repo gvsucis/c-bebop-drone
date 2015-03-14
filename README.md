@@ -13,12 +13,12 @@ Clone the code inside your Samples/ directory of SDK3 provided by Bebop.
 These installation guide is provided for GNU/Linux and Mac OS X.
 
 To compile:
-```make```
+`make`
 
 To run: 
-```make run```
+`make run`
 
-To Clean: ```make clean```
+To Clean: `make clean`
 
 ## Still yet to be completed...
 This code is currently being used as a part of my master thesis.
