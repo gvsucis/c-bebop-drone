@@ -13,6 +13,9 @@ typedef enum
     IHM_INPUT_EVENT_BACK,
     IHM_INPUT_EVENT_RIGHT,
     IHM_INPUT_EVENT_LEFT,
+    IHM_INPUT_EVENT_ASCEND,
+    IHM_INPUT_EVENT_DESCEND,
+    IHM_INPUT_EVENT_HOVER
 }eIHM_INPUT_EVENT;
 
 typedef void (*IHM_onInputEvent_t) (eIHM_INPUT_EVENT event, void *customData);

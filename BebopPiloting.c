@@ -21,23 +21,35 @@
 #include "callbacks.h" 
 
 static ARNETWORK_IOBufferParam_t c2dParams[] = {
-    {
-        .ID = 10,
+   {
+        .ID = JS_NET_CD_NONACK_ID,
         .dataType = ARNETWORKAL_FRAME_TYPE_DATA,
-        .sendingWaitTimeMs = 5,
-        .ackTimeoutMs = -1,
-        .numberOfRetry = -1,
-        .numberOfCell = 10,
+        .sendingWaitTimeMs = 20,
+        .ackTimeoutMs = ARNETWORK_IOBUFFERPARAM_INFINITE_NUMBER,
+        .numberOfRetry = ARNETWORK_IOBUFFERPARAM_INFINITE_NUMBER,
+        .numberOfCell = 2,
         .dataCopyMaxSize = 128,
-        .isOverwriting = 0,
+        .isOverwriting = 1,
     },
+    /* Acknowledged commands. */
     {
-        .ID = 11,
+        .ID = JS_NET_CD_ACK_ID,
         .dataType = ARNETWORKAL_FRAME_TYPE_DATA_WITH_ACK,
         .sendingWaitTimeMs = 20,
         .ackTimeoutMs = 500,
         .numberOfRetry = 3,
         .numberOfCell = 20,
+        .dataCopyMaxSize = 128,
+        .isOverwriting = 0,
+    },
+    /* Emergency commands. */
+    {
+        .ID = BD_NET_CD_EMERGENCY_ID,
+        .dataType = ARNETWORKAL_FRAME_TYPE_DATA_WITH_ACK,
+        .sendingWaitTimeMs = 10,
+        .ackTimeoutMs = 100,
+        .numberOfRetry = ARNETWORK_IOBUFFERPARAM_INFINITE_NUMBER,
+        .numberOfCell = 1,
         .dataCopyMaxSize = 128,
         .isOverwriting = 0,
     }
@@ -213,7 +225,14 @@ int main (int argc, char *argv[])
     
     if (!failed)
     {
-        IHM_PrintInfo(ihm, "Running ... (Arrow keys to move ; Spacebar to takeoff ; 'q' to land and quit)");
+        ARDrone3SendSpeedSettingsMaxVerticalSpeed(deviceManager, 0.2);
+        ARDrone3SendSpeedSettingsMaxRotationSpeed(deviceManager, 40);
+        ARDrone3SendSendSpeedSettingsHullProtection(deviceManager, 0.5);
+        ARDrone3SendPilotingSettingsMaxAltitude(deviceManager, 1.7);
+        ARDrone3SendPilotingSettingsMaxTilt(deviceManager, 5);
+        ARDrone3SendPilotingFlatTrim(deviceManager);
+
+        IHM_PrintInfo(ihm, "Running ... (Arrow keys to move ; Spacebar to takeoff ; 'w' to ascend, 's' to descend, 'q' to land and quit)");
         
         while (gIHMRun)
         {
@@ -452,9 +471,8 @@ void *looperRun (void* data)
     {
         while (deviceManager->run)
         {
-            ARDrone3SendPCMD(deviceManager);
-            
-            usleep(10000); //TODO 50000
+            ARDrone3SendPCMD(deviceManager);            
+            usleep(5000); //TODO 50000
         }
     }
 
@@ -620,29 +638,43 @@ void onInputEvent (eIHM_INPUT_EVENT event, void *customData)
         case IHM_INPUT_EVENT_FORWARD:
             if(deviceManager != NULL)
             {
-                // deviceManager->dataPCMD.flag = 1;
-                // deviceManager->dataPCMD.speed = 50;
+                ARDrone3SendMoveForwardCommand(deviceManager);
             }
             break;
         case IHM_INPUT_EVENT_BACK:
             if(deviceManager != NULL)
             {
-                // deviceManager->dataPCMD.flag = 1;
-                // deviceManager->dataPCMD.speed = -50;
+                ARDrone3SendMoveBackwardCommand(deviceManager);
             }
             break;
         case IHM_INPUT_EVENT_RIGHT:
             if(deviceManager != NULL)
             {
-                // deviceManager->dataPCMD.flag = 1;
-                // deviceManager->dataPCMD.turn = 50;
+                ARDrone3SendYawRightCommand(deviceManager);
             }
             break;
         case IHM_INPUT_EVENT_LEFT:
             if(deviceManager != NULL)
             {
-                // deviceManager->dataPCMD.flag = 1;
-                // deviceManager->dataPCMD.turn = -50;
+                ARDrone3SendYawLeftCommand(deviceManager);
+            }
+            break;
+        case IHM_INPUT_EVENT_ASCEND:
+            if(deviceManager != NULL)
+            {
+                ARDrone3SendAscendCommand(deviceManager);
+            }
+            break;
+        case IHM_INPUT_EVENT_DESCEND:
+            if(deviceManager != NULL)
+            {
+                ARDrone3SendDescendCommand(deviceManager);
+            }
+            break;
+        case IHM_INPUT_EVENT_HOVER:
+            if(deviceManager != NULL)
+            {
+                ARDrone3SendHoverCommand(deviceManager);
             }
             break;
         case IHM_INPUT_EVENT_NONE:
