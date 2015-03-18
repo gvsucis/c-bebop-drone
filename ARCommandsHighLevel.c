@@ -289,7 +289,7 @@ void ARDrone3SendMoveForwardCommand(DEVICE_MANAGER_t *deviceManager)
 }
 
 void ARDrone3SendMoveBackwardCommand(DEVICE_MANAGER_t *deviceManager)
-
+{
     deviceManager->dataPCMD.active = 1;
     deviceManager->dataPCMD.pitch = -30; //Speed
 }

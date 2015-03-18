@@ -227,16 +227,13 @@ int main (int argc, char *argv[])
     {
         ARDrone3SendCommonAllStates(deviceManager);
         ARDrone3SendPilotingFlatTrim(deviceManager);
-        usleep(20000);
-
         ARDrone3SendSpeedSettingsMaxVerticalSpeed(deviceManager, 0.5); //Max Vertical speed in m/s
         ARDrone3SendSpeedSettingsMaxRotationSpeed(deviceManager, 51); //Max Rotation speed in degree/s
         ARDrone3SendSendSpeedSettingsHullProtection(deviceManager, 1); // Presence of hull protection -   1 if present, 0 if not present
-        ARDrone3SendPilotingSettingsMaxAltitude(deviceManager, 1.7); //Max Altitude in meters
-        ARDrone3SendPilotingSettingsMaxTilt(deviceManager, 5); //Max tilt in degree
-        
+        ARDrone3SendPilotingSettingsMaxAltitude(deviceManager, 2); //Max Altitude in meters
+        ARDrone3SendPilotingSettingsMaxTilt(deviceManager, 6); //Max tilt in degree
 
-        IHM_PrintInfo(ihm, "Running ... (Arrow up and down to move forward and backward ; Spacebar to takeoff ; 'w' to ascend, 's' to descend, 'a' to yaw left, 'd' to yaw right and 'q' to land and quit)");
+        IHM_PrintInfo(ihm, "Running ... (Arrow up & down to move forward/backward ; Spacebar to takeoff ; 'w' to ascend, 's' to descend, 'a' to yaw left, 'd' to yaw right and 'q' to land)");
         
         while (gIHMRun)
         {
@@ -453,12 +450,18 @@ void stopNetwork (DEVICE_MANAGER_t *deviceManager)
 
 void registerARCommandsCallbacks (IHM_t *ihm)
 {
+    ARCOMMANDS_Decoder_SetARDrone3PilotingStateFlatTrimChangedCallback(flatTrimChangedCallback, ihm); 
     ARCOMMANDS_Decoder_SetCommonCommonStateBatteryStateChangedCallback(batteryStateChangedCallback, ihm);
+    ARCOMMANDS_Decoder_SetARDrone3PilotingSettingsStateMaxAltitudeChangedCallback (maxAltitudeChangedCallback, ihm);
+    ARCOMMANDS_Decoder_SetARDrone3PilotingSettingsStateMaxTiltChangedCallback (maxTiltChangedCallback, ihm);
 }
 
 void unregisterARCommandsCallbacks ()
 {
+    ARCOMMANDS_Decoder_SetARDrone3PilotingStateFlatTrimChangedCallback(NULL, NULL);
     ARCOMMANDS_Decoder_SetCommonCommonStateBatteryStateChangedCallback (NULL, NULL);
+    ARCOMMANDS_Decoder_SetARDrone3PilotingSettingsStateMaxAltitudeChangedCallback(NULL, NULL);
+    ARCOMMANDS_Decoder_SetARDrone3PilotingSettingsStateMaxTiltChangedCallback(NULL, NULL);
 }
 
 void onDisconnectNetwork (ARNETWORK_Manager_t *manager, ARNETWORKAL_Manager_t *alManager, void *customData)
@@ -605,16 +608,48 @@ eARDISCOVERY_ERROR ARDISCOVERY_Connection_ReceiveJsonCallback (uint8_t *dataRx, 
     return err;
 }
 
+void flatTrimChangedCallback(void *custom)
+{
+    // callback that flat trim is correctly processed
+    IHM_t *ihm = (IHM_t *) custom;
+    
+    if (ihm != NULL)
+    {
+        IHM_PrintFlatTrim(ihm, "Flat trim processed correctly ...");   
+    }
+}
+
 void batteryStateChangedCallback (uint8_t percent, void *custom)
 {
     // callback of changing of battery level
-    
     IHM_t *ihm = (IHM_t *) custom;
     
     if (ihm != NULL)
     {
         IHM_PrintBattery (ihm, percent);
     }
+}
+
+void maxAltitudeChangedCallback(float current, float min, float max, void *custom)
+{
+    // callback that max altitude is changed
+    IHM_t *ihm = (IHM_t *) custom;
+    
+    if (ihm != NULL)
+    {
+        IHM_PrintMaxAltitudeStateInfo(ihm, current, min, max);   
+    }
+}
+
+void maxTiltChangedCallback(float current, float min, float max, void *custom)
+{
+    // callback that max altitude is changed
+    IHM_t *ihm = (IHM_t *) custom;
+    
+    if (ihm != NULL)
+    {
+        IHM_PrintMaxTiltStateInfo(ihm, current, min, max);   
+    } 
 }
 
 // IHM callbacks: 

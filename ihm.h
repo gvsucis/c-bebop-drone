@@ -37,5 +37,8 @@ void IHM_setCustomData(IHM_t *ihm, void *customData);
 void IHM_PrintHeader(IHM_t *ihm, char *headerStr);
 void IHM_PrintInfo(IHM_t *ihm, char *infoStr);
 void IHM_PrintBattery(IHM_t *ihm, uint8_t percent);
+void IHM_PrintMaxAltitudeStateInfo(IHM_t *ihm, float current, float min, float max);
+void IHM_PrintMaxTiltStateInfo(IHM_t *ihm, float current, float min, float max);
+void IHM_PrintFlatTrim(IHM_t *ihm, char *infoStr);
 
 #endif /* _BEBOP_PILOTING_IHM_H_ */

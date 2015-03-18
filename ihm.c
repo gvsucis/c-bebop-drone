@@ -13,9 +13,17 @@
 #define INFO_X 0
 #define INFO_Y 2
 
-#define BATTERY_X 0
-#define BATTERY_Y 4
+#define FLAT_TRIM_X 0
+#define FLAT_TRIM_Y 4
 
+#define BATTERY_X 0
+#define BATTERY_Y 6
+
+#define MAX_ALTITUDE_STATE_X 0
+#define MAX_ALTITUDE_STATE_Y 8
+
+#define MAX_TILT_STATE_X 0
+#define MAX_TILT_STATE_Y 10
 
 void *IHM_InputProcessing(void *data);
 
@@ -222,6 +230,25 @@ void IHM_PrintInfo(IHM_t *ihm, char *infoStr)
     }
 }
 
+void IHM_PrintMaxAltitudeStateInfo(IHM_t *ihm, float current, float min, float max)
+{
+    if (ihm != NULL)
+    {
+        move(MAX_ALTITUDE_STATE_Y, 0);    // move to begining of line
+        clrtoeol();              // clear line
+        mvprintw(MAX_ALTITUDE_STATE_Y, MAX_ALTITUDE_STATE_X, "Max Altitude Changed: (current: %f) (min: %f) (max: %f)", current, min, max );
+    }
+}
+
+void IHM_PrintMaxTiltStateInfo(IHM_t *ihm, float current, float min, float max)
+{
+    if (ihm != NULL)
+    {
+        move(MAX_TILT_STATE_Y, 0);    // move to begining of line
+        clrtoeol();                   // clear line
+        mvprintw(MAX_TILT_STATE_Y, MAX_TILT_STATE_X, "Max Tilt Changed: (current: %f) (min: %f) (max: %f)", current, min, max );
+    }    
+}
 void IHM_PrintBattery(IHM_t *ihm, uint8_t percent)
 {
     if (ihm != NULL)
@@ -232,5 +259,14 @@ void IHM_PrintBattery(IHM_t *ihm, uint8_t percent)
     }
 }
 
+void IHM_PrintFlatTrim(IHM_t *ihm, char *infoStr)
+{
+    if (ihm != NULL)
+    {
+        move(FLAT_TRIM_Y, 0);    // move to begining of line
+        clrtoeol();         // clear line
+        mvprintw(FLAT_TRIM_Y, FLAT_TRIM_X, infoStr);
+    }    
+}
 
 

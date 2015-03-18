@@ -20,7 +20,10 @@ void *readerRun(void* data);
 
 eARNETWORK_MANAGER_CALLBACK_RETURN arnetworkCmdCallback(int buffer_id, uint8_t *data, void *custom, eARNETWORK_MANAGER_CALLBACK_STATUS cause);
 
-void batteryStateChangedCallback (uint8_t percent, void *custom);
+void batteryStateChangedCallback(uint8_t percent, void *custom);
+void flatTrimChangedCallback(void *custom);
+void maxAltitudeChangedCallback(float current, float min, float max, void *custom);
+void maxTiltChangedCallback(float current, float min, float max, void *custom);
 
 /* IHM callbacks: */
 void onInputEvent (eIHM_INPUT_EVENT event, void *customData);
