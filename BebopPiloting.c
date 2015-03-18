@@ -225,14 +225,18 @@ int main (int argc, char *argv[])
     
     if (!failed)
     {
-        ARDrone3SendSpeedSettingsMaxVerticalSpeed(deviceManager, 0.2);
-        ARDrone3SendSpeedSettingsMaxRotationSpeed(deviceManager, 40);
-        ARDrone3SendSendSpeedSettingsHullProtection(deviceManager, 0.5);
-        ARDrone3SendPilotingSettingsMaxAltitude(deviceManager, 1.7);
-        ARDrone3SendPilotingSettingsMaxTilt(deviceManager, 5);
+        ARDrone3SendCommonAllStates(deviceManager);
         ARDrone3SendPilotingFlatTrim(deviceManager);
+        usleep(10000);
 
-        IHM_PrintInfo(ihm, "Running ... (Arrow keys to move ; Spacebar to takeoff ; 'w' to ascend, 's' to descend, 'q' to land and quit)");
+        ARDrone3SendSpeedSettingsMaxVerticalSpeed(deviceManager, 0.5); //Max Vertical speed in m/s
+        ARDrone3SendSpeedSettingsMaxRotationSpeed(deviceManager, 51); //Max Rotation speed in degree/s
+        ARDrone3SendSendSpeedSettingsHullProtection(deviceManager, 1); // Presence of hull protection -   1 if present, 0 if not present
+        ARDrone3SendPilotingSettingsMaxAltitude(deviceManager, 1.7); //Max Altitude in meters
+        ARDrone3SendPilotingSettingsMaxTilt(deviceManager, 5); //Max tilt in degree
+        
+
+        IHM_PrintInfo(ihm, "Running ... (Arrow up and down to move forward and backward ; Spacebar to takeoff ; 'w' to ascend, 's' to descend, 'a' to yaw left, 'd' to yaw right and 'q' to land and quit)");
         
         while (gIHMRun)
         {
@@ -472,7 +476,7 @@ void *looperRun (void* data)
         while (deviceManager->run)
         {
             ARDrone3SendPCMD(deviceManager);            
-            usleep(5000); //TODO 50000
+            usleep(25000);
         }
     }
 

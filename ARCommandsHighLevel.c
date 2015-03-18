@@ -1,5 +1,29 @@
 #include "ARCommandsHighLevel.h"
 
+int ARDrone3SendCommonAllStates(DEVICE_MANAGER_t *deviceManager)
+{
+    int sentStatus = 1;
+    u_int8_t cmdbuf[128];
+    int32_t actualSize = 0;
+    eARCOMMANDS_GENERATOR_ERROR cmdError;
+    eARNETWORK_ERROR netError = ARNETWORK_ERROR;
+
+    // Send AllStates command
+    cmdError = ARCOMMANDS_Generator_GenerateCommonCommonAllStates(cmdbuf, sizeof(cmdbuf), &actualSize);
+    if (cmdError == ARCOMMANDS_GENERATOR_OK)
+    {
+        netError = ARNETWORK_Manager_SendData(deviceManager->netManager, JS_NET_CD_ACK_ID, cmdbuf, actualSize, NULL, &(arnetworkCmdCallback), 1);
+    }
+    
+    if ((cmdError != ARCOMMANDS_GENERATOR_OK) || (netError != ARNETWORK_OK))
+    {
+        ARSAL_PRINT(ARSAL_PRINT_ERROR, TAG, "Failed to send AllStates command.");
+        sentStatus = 0;
+    }
+
+    return sentStatus;
+}
+
 int ARDrone3SendTakeoffCommand(DEVICE_MANAGER_t *deviceManager)
 {
     int sentStatus = 1;
@@ -229,26 +253,30 @@ int ARDrone3SendPilotingSettingsMaxTilt(DEVICE_MANAGER_t *deviceManager, float c
 void ARDrone3SendYawRightCommand(DEVICE_MANAGER_t *deviceManager)
 {
     ARDrone3SendHoverCommand(deviceManager);
+
     deviceManager->dataPCMD.active = 1;
-    deviceManager->dataPCMD.yaw = 80;
+    deviceManager->dataPCMD.yaw = 100;
 }
 
 void ARDrone3SendYawLeftCommand(DEVICE_MANAGER_t *deviceManager)
 {
     ARDrone3SendHoverCommand(deviceManager);
+    
     deviceManager->dataPCMD.active = 1;
-    deviceManager->dataPCMD.yaw = -80;
+    deviceManager->dataPCMD.yaw = -100;
 }
 
 void ARDrone3SendAscendCommand(DEVICE_MANAGER_t *deviceManager)
 {
     ARDrone3SendHoverCommand(deviceManager);
+    
     deviceManager->dataPCMD.gaz = 30;
 }
 
 void ARDrone3SendDescendCommand(DEVICE_MANAGER_t *deviceManager)
 {
     ARDrone3SendHoverCommand(deviceManager);
+    
     deviceManager->dataPCMD.gaz = -30;
 }
 
@@ -260,20 +288,23 @@ void ARDrone3SendHoverCommand(DEVICE_MANAGER_t *deviceManager)
     deviceManager->dataPCMD.yaw = 0.0;
     deviceManager->dataPCMD.gaz = 0.0;
     deviceManager->dataPCMD.heading = 0.0;
-
     ARDrone3SendPCMD(deviceManager);
+    usleep(1000);
 }
 
 void ARDrone3SendMoveForwardCommand(DEVICE_MANAGER_t *deviceManager)
 {
     ARDrone3SendHoverCommand(deviceManager);
+     
     deviceManager->dataPCMD.active = 1;
-    deviceManager->dataPCMD.pitch = 30;
+    deviceManager->dataPCMD.pitch = 30; //Speed
+    ARDrone3SendPCMD(deviceManager);
 }
 
 void ARDrone3SendMoveBackwardCommand(DEVICE_MANAGER_t *deviceManager)
 {
     ARDrone3SendHoverCommand(deviceManager);
+
     deviceManager->dataPCMD.active = 1;
-    deviceManager->dataPCMD.pitch = -30;
+    deviceManager->dataPCMD.pitch = -30; //Speed
 }

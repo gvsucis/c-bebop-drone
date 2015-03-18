@@ -145,14 +145,14 @@ void *IHM_InputProcessing(void *data)
                     ihm->onInputEventCallback (IHM_INPUT_EVENT_BACK, ihm->customData);
                 }
             }
-            else if(key == KEY_LEFT)
+            else if(key == 'a')
             {
                 if(ihm->onInputEventCallback != NULL)
                 {
                     ihm->onInputEventCallback (IHM_INPUT_EVENT_LEFT, ihm->customData);
                 }
             }
-            else if(key == KEY_RIGHT)
+            else if(key == 'd')
             {
                 if(ihm->onInputEventCallback != NULL)
                 {
