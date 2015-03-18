@@ -227,7 +227,7 @@ int main (int argc, char *argv[])
     {
         ARDrone3SendCommonAllStates(deviceManager);
         ARDrone3SendPilotingFlatTrim(deviceManager);
-        usleep(10000);
+        usleep(20000);
 
         ARDrone3SendSpeedSettingsMaxVerticalSpeed(deviceManager, 0.5); //Max Vertical speed in m/s
         ARDrone3SendSpeedSettingsMaxRotationSpeed(deviceManager, 51); //Max Rotation speed in degree/s

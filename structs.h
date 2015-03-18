@@ -16,13 +16,13 @@ typedef struct ARDrone3PilotingData_t
     // Boolean flag to activate roll/pitch movement
     int active;
     // Roll consign for the drone [-100:100] Normalized
-    float roll;
+    int roll;
     // Pitch consign for the drone [-100:100] Normalized
-    float pitch;
+    int pitch;
     // Yaw rate consign for the drone [-100:100] Normalized
-    float yaw;
+    int yaw;
     // Altitude rate for the drone [-100:100] Normalized
-    float gaz;
+    int gaz;
     // Magnetic north heading of the controlling device (deg) [-180:180] Degrees
     float heading;
 } ARDrone3PilotingData_t;
