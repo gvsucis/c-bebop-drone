@@ -25,6 +25,19 @@
 #define MAX_TILT_STATE_X 0
 #define MAX_TILT_STATE_Y 10
 
+#define MAX_VERTICAL_SPEED_STATE_X 0
+#define MAX_VERTICAL_SPEED_STATE_Y 12
+
+#define MAX_ROTATION_SPEED_STATE_X 0
+#define MAX_ROTATION_SPEED_STATE_Y 14
+
+#define HULL_PROTECTION_X 0
+#define HULL_PROTECTION_Y 16
+
+#define OUTDOOR_X 0
+#define OUTDOOR_Y 18
+
+
 void *IHM_InputProcessing(void *data);
 
 
@@ -269,4 +282,42 @@ void IHM_PrintFlatTrim(IHM_t *ihm, char *infoStr)
     }    
 }
 
+void IHM_PrintMaxVerticalSpeedStateInfo(IHM_t *ihm, float current, float min, float max)
+{
+    if (ihm != NULL)
+    {
+        move(MAX_VERTICAL_SPEED_STATE_Y, 0);
+        clrtoeol();
+        mvprintw(MAX_VERTICAL_SPEED_STATE_Y, MAX_VERTICAL_SPEED_STATE_X, "Max Vertical Speed Changed: (current: %f) (min: %f) (max: %f)", current, min, max );
+    } 
+}
 
+void IHM_PrintMaxRotationSpeedStateInfo(IHM_t *ihm, float current, float min, float max)
+{
+    if (ihm != NULL)
+    {
+        move(MAX_ROTATION_SPEED_STATE_Y, 0);
+        clrtoeol();
+        mvprintw(MAX_ROTATION_SPEED_STATE_Y, MAX_ROTATION_SPEED_STATE_X, "Max Rotation Speed Changed: (current: %f) (min: %f) (max: %f)", current, min, max );
+    } 
+}
+
+void IHM_PrintHullProtectionPresence(IHM_t *ihm, char *infoStr)
+{
+    if (ihm != NULL)
+    {
+        move(HULL_PROTECTION_Y, 0);
+        clrtoeol();
+        mvprintw(HULL_PROTECTION_Y, HULL_PROTECTION_X, infoStr);
+    }  
+}
+
+void IHM_PrintOutdoor(IHM_t *ihm, char *infoStr)
+{
+    if (ihm != NULL)
+    {
+        move(OUTDOOR_Y, 0);
+        clrtoeol();
+        mvprintw(OUTDOOR_Y, OUTDOOR_X, infoStr);
+    }  
+}
