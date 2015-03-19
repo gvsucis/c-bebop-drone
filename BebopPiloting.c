@@ -225,6 +225,8 @@ int main (int argc, char *argv[])
     
     if (!failed)
     {
+        ARDrone3SendSettingsAllSettings(deviceManager);
+        sleep(1);
         ARDrone3SendCommonAllStates(deviceManager);
         sleep(1);
         ARDrone3SendPilotingFlatTrim(deviceManager);

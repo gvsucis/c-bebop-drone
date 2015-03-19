@@ -1,28 +1,20 @@
 #ifndef _BEBOP_STRUCTS_H
 #define _BEBOP_STRUCTS_H
 
-
-typedef struct
-{
-    uint8_t flag;
-    int8_t  speed;
-    int8_t  turn;
-}JS_PCMD_t;
-
 typedef struct READER_THREAD_DATA_t READER_THREAD_DATA_t;
 
 typedef struct ARDrone3PilotingData_t
 {
     // Boolean flag to activate roll/pitch movement
-    int active;
+    uint8_t active;
     // Roll consign for the drone [-100:100] Normalized
-    int roll;
+    int8_t roll;
     // Pitch consign for the drone [-100:100] Normalized
-    int pitch;
+    int8_t pitch;
     // Yaw rate consign for the drone [-100:100] Normalized
-    int yaw;
+    int8_t yaw;
     // Altitude rate for the drone [-100:100] Normalized
-    int gaz;
+    int8_t gaz;
     // Magnetic north heading of the controlling device (deg) [-180:180] Degrees
     float heading;
 } ARDrone3PilotingData_t;

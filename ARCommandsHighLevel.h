@@ -12,6 +12,7 @@
 #include "ARDrone3Settings.h"
 #include "callbacks.h"
 
+int ARDrone3SendSettingsAllSettings(DEVICE_MANAGER_t *deviceManager);
 int ARDrone3SendCommonAllStates(DEVICE_MANAGER_t *deviceManager);
 int ARDrone3SendTakeoffCommand(DEVICE_MANAGER_t *deviceManager);
 int ARDrone3SendLandCommenad(DEVICE_MANAGER_t *deviceManager);
