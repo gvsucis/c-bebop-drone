@@ -94,9 +94,9 @@ void stateHullProtectionChangedCallback(uint8_t present, void *custom)
     if (ihm != NULL)
     {
     	if (present == 1)
-        	IHM_PrintHullProtectionPresence(ihm, "Hull Protection is present");   
+        	IHM_PrintHullProtectionPresence(ihm, "Hull Protection is present.");   
         else
-        	IHM_PrintHullProtectionPresence(ihm, "Hull Protection is not present");   
+        	IHM_PrintHullProtectionPresence(ihm, "Hull Protection is not present.");   
     }
 }
 
@@ -108,8 +108,8 @@ void stateOutdoorChangedCallback(uint8_t present, void *custom)
     if (ihm != NULL)
     {
     	if (present == 1)
-        	IHM_PrintOutdoor(ihm, "This is an outdoor flight");   
+        	IHM_PrintOutdoor(ihm, "This is an outdoor flight.");   
         else
-        	IHM_PrintOutdoor(ihm, "This is not an outdoor flight");   
+        	IHM_PrintOutdoor(ihm, "This is not an outdoor flight.");   
     }
 }

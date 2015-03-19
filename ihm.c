@@ -249,7 +249,7 @@ void IHM_PrintMaxAltitudeStateInfo(IHM_t *ihm, float current, float min, float m
     {
         move(MAX_ALTITUDE_STATE_Y, 0);    // move to begining of line
         clrtoeol();              // clear line
-        mvprintw(MAX_ALTITUDE_STATE_Y, MAX_ALTITUDE_STATE_X, "Max Altitude Changed: (current: %f) (min: %f) (max: %f)", current, min, max );
+        mvprintw(MAX_ALTITUDE_STATE_Y, MAX_ALTITUDE_STATE_X, "Max Altitude Changed: (current: %.2f m/s) (min: %.2f m/s) (max: %.2f m/s)", current, min, max );
     }
 }
 
@@ -259,7 +259,7 @@ void IHM_PrintMaxTiltStateInfo(IHM_t *ihm, float current, float min, float max)
     {
         move(MAX_TILT_STATE_Y, 0);    // move to begining of line
         clrtoeol();                   // clear line
-        mvprintw(MAX_TILT_STATE_Y, MAX_TILT_STATE_X, "Max Tilt Changed: (current: %f) (min: %f) (max: %f)", current, min, max );
+        mvprintw(MAX_TILT_STATE_Y, MAX_TILT_STATE_X, "Max Tilt Changed: (current: %.2f degrees) (min: %.2f degrees) (max: %.2f degrees)", current, min, max );
     }    
 }
 void IHM_PrintBattery(IHM_t *ihm, uint8_t percent)
@@ -288,7 +288,7 @@ void IHM_PrintMaxVerticalSpeedStateInfo(IHM_t *ihm, float current, float min, fl
     {
         move(MAX_VERTICAL_SPEED_STATE_Y, 0);
         clrtoeol();
-        mvprintw(MAX_VERTICAL_SPEED_STATE_Y, MAX_VERTICAL_SPEED_STATE_X, "Max Vertical Speed Changed: (current: %f) (min: %f) (max: %f)", current, min, max );
+        mvprintw(MAX_VERTICAL_SPEED_STATE_Y, MAX_VERTICAL_SPEED_STATE_X, "Max Vertical Speed Changed: (current: %.2f m/s) (min: %.2f m/s) (max: %.2f m/s)", current, min, max );
     } 
 }
 
@@ -298,7 +298,7 @@ void IHM_PrintMaxRotationSpeedStateInfo(IHM_t *ihm, float current, float min, fl
     {
         move(MAX_ROTATION_SPEED_STATE_Y, 0);
         clrtoeol();
-        mvprintw(MAX_ROTATION_SPEED_STATE_Y, MAX_ROTATION_SPEED_STATE_X, "Max Rotation Speed Changed: (current: %f) (min: %f) (max: %f)", current, min, max );
+        mvprintw(MAX_ROTATION_SPEED_STATE_Y, MAX_ROTATION_SPEED_STATE_X, "Max Rotation Speed Changed: (current: %.2f degree/s) (min: %.2f degree/s) (max: %.2f degree/s)", current, min, max );
     } 
 }
 
